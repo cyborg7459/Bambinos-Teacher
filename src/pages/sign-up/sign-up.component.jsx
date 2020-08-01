@@ -16,22 +16,23 @@ class SignUpPage extends React.Component {
         email: '',
         phone: ''
     }
-
+    
     sendData = (nameV, emailV, phoneV) => {
         let data = {
             name: nameV,
-            email: emailV,
-            phone: phoneV
+            email_id: emailV,
+            mobile: phoneV
         }
         
         var config = {
         method: 'post',
-        url: 'localhost:3000/teacherSignUp/save',
+        url: 'https://a0e3f85707e5.ngrok.io',
         headers: { 
             'Content-Type': 'application/json'
         },
         data : data
         };
+        console.log(data);
 
         axios(config)
         .then(response => console.log(response.data))
@@ -57,13 +58,13 @@ class SignUpPage extends React.Component {
         }
         let config = {
         method: 'post',
-        url: 'localhost:8089/teacherSignUp/savePassword',
+        url: 'https://a0e3f85707e5.ngrok.io',
         headers: { 
             'Content-Type': 'application/json'
         },
         data : data
         };
-
+        
         axios(config)
         .then(response => console.log(response.data))
         .catch(error => console.log(error));

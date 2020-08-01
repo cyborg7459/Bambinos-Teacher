@@ -34,13 +34,32 @@ class SetPasswordForm extends React.Component {
         let passValue = password.value;
         let confPassValue = confPassword.value;
         if(passValue.length>confPassValue.length)
+        {
             this.validationError(confPassword, "Too short");
+            return false;
+        }
         else if(passValue.length<confPassValue.length)
+        {
             this.validationError(confPassword, "Too long");
+            return false;
+        }
         else if(passValue !== confPassValue)
+        {
             this.validationError(confPassword, "Passwords do not match");
+            return false;
+        }
         else 
+        {
             this.removeErrors(confPassword);
+            return true;
+        }
+    }
+
+    setPassword = () => {
+        if(this.passwordConfirmValidate())
+        {
+            this.props.handleSubmit();
+        }
     }
 
     render() {
@@ -63,7 +82,7 @@ class SetPasswordForm extends React.Component {
                         label= 'Confirm Password'
                         handleChange = {this.passwordConfirmValidate}
                     />
-                    <PasswordButton onClick={this.otpValidate} id="password-set-btn" className="btn btn-block btn-success">Set Password</PasswordButton>
+                    <PasswordButton onClick={this.setPassword} id="password-set-btn" className="btn btn-block btn-success">Set Password</PasswordButton>
                 </PasswordForm>
             </div>
         )
