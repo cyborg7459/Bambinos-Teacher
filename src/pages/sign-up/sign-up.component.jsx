@@ -16,7 +16,7 @@ class SignUpPage extends React.Component {
         email: '',
         phone: ''
     }
-    
+    cd
     sendData = (nameV, emailV, phoneV) => {
         let data = {
             name: nameV,
