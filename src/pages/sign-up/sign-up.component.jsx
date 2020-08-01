@@ -58,7 +58,7 @@ class SignUpPage extends React.Component {
         }
         let config = {
         method: 'post',
-        url: 'https://a0e3f85707e5.ngrok.io',
+        url: 'https://b9883a292946.ngrok.io/Teacher/',
         headers: { 
             'Content-Type': 'application/json'
         },
