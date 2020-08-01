@@ -23,10 +23,12 @@ class SignUpPage extends React.Component {
             email_id: emailV,
             mobile: phoneV
         }
+
+        console.log(this.props);
         
         var config = {
         method: 'post',
-        url: 'https://b9883a292946.ngrok.io/Teacher/',
+        url: 'https://80277d1d7470.ngrok.io/teacherSignUp/save',
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -35,7 +37,16 @@ class SignUpPage extends React.Component {
         console.log(data);
 
         axios(config)
-        .then(response => console.log(response.data))
+        .then(response => {
+            if(response.data.data.status) {
+                const sentOtp = parseInt(response.data.data.otp);
+                this.setState({otp: sentOtp, step: 2});
+            }
+            else {
+                alert("You're already registered");
+                setTimeout(this.props.history.push("/signin"), 2000);
+            }
+        })
         .catch(error => console.log(error));
     };
 
@@ -45,9 +56,6 @@ class SignUpPage extends React.Component {
         let phoneInp = document.getElementById('phone-inp');     
         this.updateState(nameInp.value, emailInp.value, phoneInp.value);
         this.sendData(nameInp.value, emailInp.value, phoneInp.value);
-        this.setState({
-            step:2
-        })
     }
 
     setPassword = () => {
@@ -58,7 +66,7 @@ class SignUpPage extends React.Component {
         }
         let config = {
         method: 'post',
-        url: 'https://b9883a292946.ngrok.io/Teacher/',
+        url: 'https://80277d1d7470.ngrok.io/teacherSignUp/savePassword',
         headers: { 
             'Content-Type': 'application/json'
         },

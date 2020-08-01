@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 class OTPForm extends React.Component {
 
     state = {
-        timeLeft: 30
+        timeLeft: 200
     }
 
     componentDidMount() {
@@ -81,7 +81,9 @@ class OTPForm extends React.Component {
 
     otpValidate = () => {
         const {otp} = this.props;
+        console.log(otp);
         const OtpInput = document.getElementById('otp-inp');
+        console.log(OtpInput.value);
         if(this.otpInputValidate())
         {
             if(parseInt(OtpInput.value) !== otp)

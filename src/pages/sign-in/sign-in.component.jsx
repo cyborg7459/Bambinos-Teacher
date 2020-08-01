@@ -69,7 +69,7 @@ class SignInPage extends React.Component {
 
         var config = {
         method: 'post',
-        url: 'https://b9883a292946.ngrok.io/Teacher/',
+        url: 'https://80277d1d7470.ngrok.io/teacherSignUp/getByEmail',
         headers: { 
             'Content-Type': 'application/json'
         },
