@@ -16,7 +16,7 @@ class OTPForm extends React.Component {
 
     displayTimer = () => {
         const {step} = this.props;
-        if(step!=2)
+        if(step!==2)
             return;
         else
         {
@@ -27,7 +27,7 @@ class OTPForm extends React.Component {
                 this.setState(
                     {timeLeft: this.state.timeLeft-1}
                 );
-                if(this.state.timeLeft == -1)
+                if(this.state.timeLeft === -1)
                 {
                     this.formExpire();
                 }
@@ -65,7 +65,7 @@ class OTPForm extends React.Component {
 
     otpInputValidate = () => {
         const OtpInput = document.getElementById('otp-inp');
-        if(OtpInput.value.length != 4)
+        if(OtpInput.value.length !== 4)
         {
             this.validationError(OtpInput, "OTP must be of length 4 digits");
             return false;
@@ -84,7 +84,7 @@ class OTPForm extends React.Component {
         const OtpInput = document.getElementById('otp-inp');
         if(this.otpInputValidate())
         {
-            if(OtpInput.value != otp)
+            if(parseInt(OtpInput.value) !== otp)
                 this.validationError(OtpInput, "Incorrect OTP !!! Try again")
             else 
                 this.OTPSuccess();
@@ -119,7 +119,7 @@ class OTPForm extends React.Component {
                     />
                     <OTPButton onClick={this.otpValidate} id="otp-submit-btn" className="btn btn-block btn-success">Verify</OTPButton>
                     <p className="text-center mt-3 mb-0">
-                        <Link>Didn't receive OTP? Click here to resend</Link>
+                        <Link to="#">Didn't receive OTP? Click here to resend</Link>
                     </p>
                 </OtpForm>
             </div>

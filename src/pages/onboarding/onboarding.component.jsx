@@ -12,7 +12,7 @@ class OnboardingPage extends React.Component {
         let menuItem = document.querySelectorAll('.sidebar-menu-item');
         let sidebar = document.getElementById('sidebar');
         let formContainer = document.getElementById('form-container');
-        let sidebarInner = document.getElementById('sidebar-inner');
+        // let sidebarInner = document.getElementById('sidebar-inner');
 
         sidebar.addEventListener('mouseenter', () => {
             sidebar.classList.add('visible');
@@ -188,7 +188,7 @@ class OnboardingPage extends React.Component {
                                         </div>
                                         <div class="form-group mb-4">
                                             <label class="lead">Teaching Sample</label>
-                                            <input name="samplelink" required type="text" name="teachingsample" placeholder="Give drive link or YouTube URL for your 2.5-minute teaching sample" class="form-control form-control-lg" />
+                                            <input name="samplelink" required type="text"c placeholder="Give drive link or YouTube URL for your 2.5-minute teaching sample" class="form-control form-control-lg" />
                                         </div>
                                         <a href="#profile" id="work-submit" class="continue-btn btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">Submit and Proceed</a>
                                     </FormContent>

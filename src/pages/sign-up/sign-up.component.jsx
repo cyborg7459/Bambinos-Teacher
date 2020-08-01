@@ -16,7 +16,7 @@ class SignUpPage extends React.Component {
         email: '',
         phone: ''
     }
-    cd
+    
     sendData = (nameV, emailV, phoneV) => {
         let data = {
             name: nameV,
@@ -26,7 +26,7 @@ class SignUpPage extends React.Component {
         
         var config = {
         method: 'post',
-        url: 'https://a0e3f85707e5.ngrok.io',
+        url: 'https://b9883a292946.ngrok.io/Teacher/',
         headers: { 
             'Content-Type': 'application/json'
         },

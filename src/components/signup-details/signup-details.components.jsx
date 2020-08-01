@@ -32,7 +32,7 @@ class SignUpDetails extends React.Component {
 
     nameValidate = () => {
         let Name = document.getElementById('name-inp');
-        if(Name.value.length==0)
+        if(Name.value.length===0)
         {
             this.validationError(Name, "Please enter your name");
             return false;
@@ -48,7 +48,7 @@ class SignUpDetails extends React.Component {
         let Email = document.getElementById('email-inp');
         const mailRE =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        if(Email.value.length==0)
+        if(Email.value.length===0)
         {
             this.validationError(Email, "Please enter email");
             return false;
@@ -68,7 +68,7 @@ class SignUpDetails extends React.Component {
     phoneValidate = () => {
         let Phone = document.getElementById('phone-inp');
         let phoneRE = /^\d+$/;
-        if(Phone.value.length==0)
+        if(Phone.value.length===0)
         {
             this.validationError(Phone, "Please enter phone number")
             return false;
@@ -78,7 +78,7 @@ class SignUpDetails extends React.Component {
             this.validationError(Phone, "Phone number must contain only digits");
             return false;
         }
-        else if(Phone.value.length!=10)
+        else if(Phone.value.length!==10)
         {     
             this.validationError(Phone, "Phone number must be 10 digits");
             return false;
