@@ -1,8 +1,10 @@
 import React from 'react';
-// import './onboarding.style.css';
 import Sidebar from '../../components/sidebar/sidebar.component';
 import {Row, Col} from 'react-bootstrap';
+import axios from 'axios';
+import {connect} from 'react-redux';
 
+import {selectCurrentUser} from '../../redux/user/user.selectors';
 import {OnboardingContainer, FormContainer, SidebarToggler, FormRegion, StyledForm, PersonalImage, FormContent, WorkImage, ProfileImage} from './onboarding.style';
 
 class OnboardingPage extends React.Component {
@@ -47,6 +49,37 @@ class OnboardingPage extends React.Component {
             sidebar.classList.remove('sm-hidden');
         })
     }
+
+    savePersonalDetails = () => {
+        const cityName = document.getElementById('city').value;
+        const stateName = document.getElementById('state').value;
+        const countryName = document.getElementById('country').value;
+        const bioDesc = document.getElementById('bio').value;
+
+        let data = {
+            email_id: this.props.currentUser.email,
+            city: cityName,
+            state: stateName,
+            country: countryName,
+            image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png',
+            bio_desc: bioDesc
+        }
+
+        console.log(data);
+
+        let config = {
+            method: 'post',
+            url: 'https://7315fdfcf7b5.ngrok.io/teacherSignUp/saveLocation',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        axios(config)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
     
     render() {
         return (
@@ -55,7 +88,7 @@ class OnboardingPage extends React.Component {
                 <FormContainer id="form-container">
                     <SidebarToggler id="sidebar-toggle-btn" className="btn btn-outline-info">Menu</SidebarToggler>
                     <FormRegion id="form-region">
-                        <StyledForm action="/" method="#" id="personal">
+                        <StyledForm id="personal">
                             <Row>
                                 <Col lg={4} className="order-1 order-lg-2">
                                     <PersonalImage></PersonalImage>
@@ -64,40 +97,59 @@ class OnboardingPage extends React.Component {
                                     <FormContent className="py-5 px-3 px-md-4">
                                         <h1 class="display-4">Tell Us About Yourself</h1>
                                         <hr class="mb-4" />
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Name</label>
-                                            <input readOnly type="text" placeholder="Name from the database" class="form-control form-control-lg" />
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="col-md-4">
+                                        <Row className="mt-4">
+                                            <Col md={4}>
                                                 <div class="form-group mb-3"> 
                                                     <label class="lead">City</label>
-                                                    <input required class="form-control" name="city" type="text"/>
+                                                    <input 
+                                                        required 
+                                                        class="form-control" 
+                                                        id="city" 
+                                                        type="text"
+                                                        placeholder="Enter your city's name"/>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-4">
+                                            </Col>
+                                            <Col md={4}>
                                                 <div class="form-group mb-3">
                                                     <label class="lead">State</label>
-                                                    <input required class="form-control" name="state" type="text"/>
+                                                    <input 
+                                                        required 
+                                                        class="form-control" 
+                                                        id="state" 
+                                                        type="text"
+                                                        placeholder="Enter your state name"/>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-4">
+                                            </Col>
+                                            <Col md={4}>
                                                 <div class="form-group mb-3">
                                                     <label class="lead">Country</label>
-                                                    <input required class="form-control" name="country" type="text"/>
+                                                    <input 
+                                                        required 
+                                                        class="form-control" 
+                                                        id="country" 
+                                                        type="text"
+                                                        placeholder="Enter country name"/>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mb-2 mt-3">
+                                            </Col>
+                                        </Row>
+                                        {/* <div class="form-group mb-2 mt-3">
                                             <label class="lead mr-3">Upload Photo : </label>
                                             <input required type="file" name="photo" />
-                                        </div>
+                                        </div> */}
                                         <div class="form-group mt-4">
                                             <label class="lead">Bio</label>
                                             <br />
-                                            <textarea required class="lead form-control mt-0" placeholder="Give a brief description about yourself" name="bio"></textarea>
+                                            <textarea 
+                                                required 
+                                                class="lead form-control mt-0" 
+                                                placeholder="Give a brief description about yourself" id="bio">
+                                            </textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">Submit & Proceed</button>
+                                        <button 
+                                            onClick={this.savePersonalDetails}  
+                                            class="btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">
+                                                Submit & Proceed
+                                        </button>
                                     </FormContent>
                                 </Col>
                             </Row>
@@ -225,9 +277,13 @@ class OnboardingPage extends React.Component {
                 </FormContainer>
             </OnboardingContainer>   
         )
-    }
-    
+    }  
 }
 
-export default OnboardingPage;
+const MapStateToProps = state => ({
+    currentUser : selectCurrentUser(state)
+})
+
+
+export default connect(MapStateToProps)(OnboardingPage);
 

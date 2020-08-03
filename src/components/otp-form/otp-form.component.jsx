@@ -39,57 +39,35 @@ class OTPForm extends React.Component {
         }           
     }
 
-    validationError = (target, errorMessage) => {
-        target.classList.add('error');
-        target.nextElementSibling.innerHTML = `${errorMessage}`;
-        this.disableBtn();
-    }
-
-    removeErrors = (target) => {
-        target.classList.remove('error');
-        target.nextElementSibling.innerHTML = "";
-        this.enableBtn();
-    }
-
-    disableBtn = () => {
-        let SubmitBtn = document.getElementById('otp-submit-btn');
-        SubmitBtn.disabled = true;
-        SubmitBtn.classList.add('disabled');
-    }
-
-    enableBtn = () => {
-        let SubmitBtn = document.getElementById('otp-submit-btn');
-        SubmitBtn.disabled = false;
-        SubmitBtn.classList.remove('disabled');
-    }
-
     otpInputValidate = () => {
         const OtpInput = document.getElementById('otp-inp');
+        let targetBtn = document.getElementById('otp-submit-btn');
+        let validationError = this.props.validationError;
+        let removeErrors = this.props.removeErrors;
         if(OtpInput.value.length !== 4)
         {
-            this.validationError(OtpInput, "OTP must be of length 4 digits");
+            validationError(OtpInput, "OTP must be of length 4 digits", targetBtn);
             return false;
         }
         else
         {
-            this.removeErrors(OtpInput);
+            removeErrors(OtpInput, targetBtn);
             return true;
         }
     }
 
-    OTPSuccess = this.props.OTPSuccess;
-
     otpValidate = () => {
         const {otp} = this.props;
-        console.log(otp);
+        const OTPSuccess = this.props.OTPSuccess;
         const OtpInput = document.getElementById('otp-inp');
-        console.log(OtpInput.value);
+        let targetBtn = document.getElementById('otp-submit-btn');
+        let validationError = this.props.validationError;
         if(this.otpInputValidate())
         {
             if(parseInt(OtpInput.value) !== otp)
-                this.validationError(OtpInput, "Incorrect OTP !!! Try again")
+                validationError(OtpInput, "Incorrect OTP !!! Try again", targetBtn)
             else 
-                this.OTPSuccess();
+                OTPSuccess();
         } 
     }
 

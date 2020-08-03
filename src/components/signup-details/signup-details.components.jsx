@@ -6,86 +6,71 @@ import {SignUpForm, SignUpButton} from './signup-details.styles';
 
 class SignUpDetails extends React.Component {
     
-    validationError = (target, errorMessage) => {
-        target.classList.add('error');
-        target.nextElementSibling.innerHTML = `${errorMessage}`;
-        this.disableBtn();
-    }
-
-    removeErrors = (target) => {
-        target.classList.remove('error');
-        target.nextElementSibling.innerHTML = " ";
-        this.enableBtn();
-    }
-
-    disableBtn = () => {
-        let SubmitBtn = document.getElementById('sign-up-submit');
-        SubmitBtn.disabled = true;
-        SubmitBtn.classList.add('disabled');
-    }
-
-    enableBtn = () => {
-        let SubmitBtn = document.getElementById('sign-up-submit');
-        SubmitBtn.disabled = false;
-        SubmitBtn.classList.remove('disabled');
-    }
-
     nameValidate = () => {
         let Name = document.getElementById('name-inp');
+        let targetBtn = document.getElementById('sign-up-submit');
+        let validationError = this.props.validationError;
+        let removeErrors = this.props.removeErrors;
         if(Name.value.length===0)
         {
-            this.validationError(Name, "Please enter your name");
+            validationError(Name, "Please enter your name", targetBtn);
             return false;
         }
         else
         {
-            this.removeErrors(Name);
+            removeErrors(Name, targetBtn);
             return true;
         }
     }
 
     emailValidate = () => {
         let Email = document.getElementById('email-inp');
+        let targetBtn = document.getElementById('sign-up-submit');
+        let validationError = this.props.validationError;
+        let removeErrors = this.props.removeErrors;
         const mailRE =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if(Email.value.length===0)
         {
-            this.validationError(Email, "Please enter email");
+            validationError(Email, "Please enter email", targetBtn);
             return false;
         }
         else if(!mailRE.test(Email.value.trim()))
         {
-            this.validationError(Email, "Please enter a valid email address");
+            validationError(Email, "Please enter a valid email address", targetBtn);
             return false;
         }
         else 
         {
-            this.removeErrors(Email);
+            removeErrors(Email, targetBtn);
             return true;
         }
     }
 
     phoneValidate = () => {
         let Phone = document.getElementById('phone-inp');
+        let targetBtn = document.getElementById('sign-up-submit');
+        let validationError = this.props.validationError;
+        let removeErrors = this.props.removeErrors;
         let phoneRE = /^\d+$/;
         if(Phone.value.length===0)
         {
-            this.validationError(Phone, "Please enter phone number")
+            validationError(Phone, "Please enter phone number", targetBtn)
             return false;
         }
         else if(!phoneRE.test(Phone.value.trim()))
         {
-            this.validationError(Phone, "Phone number must contain only digits");
+            validationError(Phone, "Phone number must contain only digits", targetBtn);
             return false;
         }
         else if(Phone.value.length!==10)
         {     
-            this.validationError(Phone, "Phone number must be 10 digits");
+            validationError(Phone, "Phone number must be 10 digits", targetBtn);
             return false;
         }
         else 
         {
-            this.removeErrors(Phone);
+            removeErrors(Phone, targetBtn);
             return true;
         }
     }

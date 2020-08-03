@@ -3,7 +3,9 @@ import './sign-in.style.css';
 import {Link} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
+import {setCurrentUser} from '../../redux/user/user.actions';
 import InputGroup from '../../components/input/input.component';
 import Header from '../../components/header/header.component';
 
@@ -57,6 +59,7 @@ class SignInPage extends React.Component {
     }
 
     sendLoginRequest = () => {
+        const {setCurrentUser} = this.props;
         let Email = document.getElementById('email-inp');
         let Password = document.getElementById('password-inp');
         
@@ -64,12 +67,15 @@ class SignInPage extends React.Component {
             email_id: Email.value,
             password: Password.value
         }
+        let user = {
+            email: Email.value
+        }
 
         console.log(data);
 
         var config = {
         method: 'post',
-        url: 'https://80277d1d7470.ngrok.io/teacherSignUp/getByEmail',
+        url: 'https://7315fdfcf7b5.ngrok.io/teacherSignUp/getByEmail',
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -77,7 +83,24 @@ class SignInPage extends React.Component {
         };
 
         axios(config)
-        .then(response => console.log(response.data))
+        .then(response => {
+            console.log(response.data);
+            if(response.data.status) {
+                setCurrentUser(user);
+                this.props.history.push('/onboard');
+            }
+            else {
+                if(response.data.msg == "Please sign up to login")
+                {
+                    alert("This email ID is not registered with us. Please sign up with us");
+                    this.props.history.push('/signup');
+                }
+                else if(response.data.msg == "Invalid password")
+                {
+                    alert("The password you've entered is incorrect");
+                }
+            }
+        })
         .catch(error => console.log(error));
     }
 
@@ -116,4 +139,11 @@ class SignInPage extends React.Component {
     }
 }
 
-export default SignInPage;
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser : user => dispatch(setCurrentUser(user))
+})
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(SignInPage);

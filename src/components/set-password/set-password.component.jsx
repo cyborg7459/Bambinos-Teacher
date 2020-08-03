@@ -3,63 +3,40 @@ import InputGroup from '../input/input.component';
 import {PasswordButton, PasswordForm} from './set-password.styles';
 
 class SetPasswordForm extends React.Component {
-
-    validationError = (target, errorMessage) => {
-        target.classList.add('error');
-        target.nextElementSibling.innerHTML = `${errorMessage}`;
-        this.disableBtn();
-    }
-
-    removeErrors = (target) => {
-        target.classList.remove('error');
-        target.nextElementSibling.innerHTML = "";
-        this.enableBtn();
-    }
-
-    disableBtn = () => {
-        let SubmitBtn = document.getElementById('password-set-btn');
-        SubmitBtn.disabled = true;
-        SubmitBtn.classList.add('disabled');
-    }
-
-    enableBtn = () => {
-        let SubmitBtn = document.getElementById('password-set-btn');
-        SubmitBtn.disabled = false;
-        SubmitBtn.classList.remove('disabled');
-    }
-
+    
     passwordConfirmValidate = () => {
         let password = document.getElementById('password-inp');
         let confPassword = document.getElementById('conf-password-inp');
         let passValue = password.value;
         let confPassValue = confPassword.value;
+        let targetBtn = document.getElementById('password-set-btn');
+        const validationError = this.props.validationError;
+        const removeErrors = this.props.removeErrors;
         if(passValue.length>confPassValue.length)
         {
-            this.validationError(confPassword, "Too short");
+            validationError(confPassword, "Too short", targetBtn);
             return false;
         }
         else if(passValue.length<confPassValue.length)
         {
-            this.validationError(confPassword, "Too long");
+            validationError(confPassword, "Too long", targetBtn);
             return false;
         }
         else if(passValue !== confPassValue)
         {
-            this.validationError(confPassword, "Passwords do not match");
+            validationError(confPassword, "Passwords do not match", targetBtn);
             return false;
         }
         else 
         {
-            this.removeErrors(confPassword);
+            removeErrors(confPassword, targetBtn);
             return true;
         }
     }
 
     setPassword = () => {
         if(this.passwordConfirmValidate())
-        {
             this.props.handleSubmit();
-        }
     }
 
     render() {
@@ -67,6 +44,7 @@ class SetPasswordForm extends React.Component {
             <div className="form-container">
                 <h1>Set Password</h1>
                 <PasswordForm>
+                <h4 className="text-center">{`Set password for ${this.props.email}`}</h4>
                     <InputGroup
                         required
                         id='password-inp'
