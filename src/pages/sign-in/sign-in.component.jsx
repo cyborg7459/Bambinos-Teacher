@@ -8,8 +8,13 @@ import {connect} from 'react-redux';
 import {setCurrentUser} from '../../redux/user/user.actions';
 import InputGroup from '../../components/input/input.component';
 import Header from '../../components/header/header.component';
+import Loader from '../../components/loader/loader.component';
 
 class SignInPage extends React.Component {
+
+    state = {
+        isLoading : false,
+    }
 
     validationError = (target, errorMessage) => {
         target.classList.add('error');
@@ -59,16 +64,19 @@ class SignInPage extends React.Component {
     }
 
     sendLoginRequest = () => {
+        this.setState({
+            isLoading: true
+        })
         const {setCurrentUser} = this.props;
-        let Email = document.getElementById('email-inp');
-        let Password = document.getElementById('password-inp');
+        let Email = document.getElementById('email-inp').value;
+        let Password = document.getElementById('password-inp').value;
         
         let data = {
-            email_id: Email.value,
-            password: Password.value
+            email_id: Email,
+            password: Password
         }
         let user = {
-            email: Email.value
+            email: Email
         }
 
         console.log(data);
@@ -90,12 +98,15 @@ class SignInPage extends React.Component {
                 this.props.history.push('/onboard');
             }
             else {
-                if(response.data.msg == "Please sign up to login")
+                this.setState({
+                    isLoading : false
+                })
+                if(response.data.msg === "Please sign up to login")
                 {
                     alert("This email ID is not registered with us. Please sign up with us");
                     this.props.history.push('/signup');
                 }
-                else if(response.data.msg == "Invalid password")
+                else if(response.data.msg === "Invalid password")
                 {
                     alert("The password you've entered is incorrect");
                 }
@@ -107,6 +118,9 @@ class SignInPage extends React.Component {
     render() {
         return (
             <div className="sign-in-container">
+                {
+                    this.state.isLoading ? <Loader text='Signing In'></Loader> : null
+                }
                 <Header></Header>
                 <div className="form-container">
                 <h1>Sign In</h1>

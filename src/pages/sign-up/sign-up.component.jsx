@@ -37,7 +37,6 @@ class SignUpPage extends React.Component {
     }
 
     enableBtn = (btn) => {
-        let SubmitBtn = document.getElementById('sign-up-submit');
         btn.disabled = false;
         btn.classList.remove('disabled');
     }

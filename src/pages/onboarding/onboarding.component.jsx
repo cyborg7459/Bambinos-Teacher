@@ -1,11 +1,22 @@
 import React from 'react';
 import Sidebar from '../../components/sidebar/sidebar.component';
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
 import {selectCurrentUser} from '../../redux/user/user.selectors';
-import {OnboardingContainer, FormContainer, SidebarToggler, FormRegion, StyledForm, PersonalImage, FormContent, WorkImage, ProfileImage} from './onboarding.style';
+import {
+    OnboardingContainer,
+    FormContainer, 
+    SidebarToggler, 
+    FormRegion, 
+    StyledForm,
+    PersonalImage, 
+    FormContent, 
+    WorkImage, 
+    ProfileImage,
+    FormLabel
+} from './onboarding.style';
 
 class OnboardingPage extends React.Component {
 
@@ -99,37 +110,34 @@ class OnboardingPage extends React.Component {
                                         <hr class="mb-4" />
                                         <Row className="mt-4">
                                             <Col md={4}>
-                                                <div class="form-group mb-3"> 
-                                                    <label class="lead">City</label>
-                                                    <input 
+                                                <Form.Group> 
+                                                    <FormLabel class="lead">City</FormLabel>
+                                                    <Form.Control 
                                                         required 
-                                                        class="form-control" 
                                                         id="city" 
                                                         type="text"
                                                         placeholder="Enter your city's name"/>
-                                                </div>
+                                                </Form.Group>
                                             </Col>
                                             <Col md={4}>
-                                                <div class="form-group mb-3">
-                                                    <label class="lead">State</label>
-                                                    <input 
-                                                        required 
-                                                        class="form-control" 
+                                                <Form.Group>
+                                                    <FormLabel class="lead">State</FormLabel>
+                                                    <Form.Control
+                                                        required
                                                         id="state" 
                                                         type="text"
                                                         placeholder="Enter your state name"/>
-                                                </div>
+                                                </Form.Group>
                                             </Col>
                                             <Col md={4}>
-                                                <div class="form-group mb-3">
-                                                    <label class="lead">Country</label>
-                                                    <input 
+                                                <Form.Group>
+                                                    <FormLabel class="lead">Country</FormLabel>
+                                                    <Form.Control 
                                                         required 
-                                                        class="form-control" 
                                                         id="country" 
                                                         type="text"
                                                         placeholder="Enter country name"/>
-                                                </div>
+                                                </Form.Group>
                                             </Col>
                                         </Row>
                                         {/* <div class="form-group mb-2 mt-3">
@@ -137,19 +145,22 @@ class OnboardingPage extends React.Component {
                                             <input required type="file" name="photo" />
                                         </div> */}
                                         <div class="form-group mt-4">
-                                            <label class="lead">Bio</label>
+                                            <FormLabel class="lead">Bio</FormLabel>
                                             <br />
-                                            <textarea 
+                                            <Form.Control
+                                                as="textarea" 
                                                 required 
                                                 class="lead form-control mt-0" 
                                                 placeholder="Give a brief description about yourself" id="bio">
-                                            </textarea>
+                                            </Form.Control>
                                         </div>
-                                        <button 
-                                            onClick={this.savePersonalDetails}  
-                                            class="btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">
+                                        <Button  
+                                            variant="outline-primary"
+                                            block
+                                            className="mt-5"
+                                            onClick={this.savePersonalDetails}>
                                                 Submit & Proceed
-                                        </button>
+                                        </Button>
                                     </FormContent>
                                 </Col>
                             </Row>
@@ -163,9 +174,9 @@ class OnboardingPage extends React.Component {
                                     <FormContent className="py-5 px-3 px-md-4">
                                         <h1 class="display-4">Work & Experience</h1>
                                         <hr class="mb-4" />
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Select your Qualification</label>
-                                            <select class="form-control form-control-lg" required  name="qualification">
+                                        <Form.Group>
+                                            <FormLabel class="lead">Select your Qualification</FormLabel>
+                                            <Form.Control as="select" required  id="qualification">
                                                 <option value="">Select a qualification</option>
                                                 <option value="PhD">PhD</option>
                                                 <option value="Master Degree">Master Degree</option>
@@ -176,73 +187,110 @@ class OnboardingPage extends React.Component {
                                                 <option value="Certificate 3">Certificate 3</option>
                                                 <option value="Working Towards">Working Towards</option>
                                                 <option value="Trainee">Trainee</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Course Name</label>
-                                            <input type="text" placeholder="Enter a name for your course" name="coursename" required class="form-control form-control-lg" />
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Course Category</label>
-                                            <input name="coursecategory" required placeholder="Enter a category which best suits your course content" type="text" class="form-control form-control-lg" />
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="lead">What is your role</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="role" id="role1" value="individual" />
-                                                        <label class="lead ml-3 radio-opt" for="exampleRadios1">
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <FormLabel class="lead">Course Name</FormLabel>
+                                            <Form.Control
+                                                type="text" 
+                                                id="coursename" 
+                                                placeholder="Enter a name for your course" 
+                                                required 
+                                            />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <FormLabel class="lead">Course Category</FormLabel>
+                                            <Form.Control 
+                                                type="text"
+                                                id="coursecategory" 
+                                                placeholder="Enter a category which best suits your course content" 
+                                                required 
+                                            />
+                                        </Form.Group>
+                                        <Row className="mt-4">
+                                            <Col md={6}>
+                                                <Form.Group>
+                                                    <FormLabel>What is your role</FormLabel>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="role" 
+                                                            value="individual" />
+                                                        <FormLabel className="ml-3">
                                                         Individual
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="role" id="role2" value="organisation" />
-                                                        <label class="lead ml-3 radio-opt" for="exampleRadios2">
+                                                        </FormLabel>
+                                                    </Form.Check>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="role" 
+                                                            value="organisation" />
+                                                        <FormLabel className="ml-3">
                                                         Organisation
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="lead">Prior teaching experience</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="teachingXp" id="teachingXp1" value="formalperson" />
-                                                        <label class="lead ml-3 radio-opt">
+                                                        </FormLabel>
+                                                    </Form.Check>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md={6}>
+                                                <Form.Group>
+                                                    <FormLabel>Prior teaching experience</FormLabel>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="teachingXp" 
+                                                            value="formalperson" />
+                                                        <FormLabel className="ml-3">
                                                         In person, formal
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="teachingXp" id="teachingXp2" value="informalperson" />
-                                                        <label class="lead ml-3 radio-opt">
-                                                        In person, informal
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="teachingXp" id="teachingXp3" value="online" />
-                                                        <label class="lead ml-3 radio-opt">
-                                                        Online
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" name="teachingXp" id="teachingXp4" value="none" />
-                                                        <label class="lead ml-3 radio-opt">
-                                                        None
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="lead">Teaching Experience</label>
-                                            <textarea class="lead mt-0" placeholder="Tell us about your teaching experience, if any, in not about 100 words" className="form-control" name="teachingexp" required></textarea>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="lead">Teaching Sample</label>
-                                            <input name="samplelink" required type="text"c placeholder="Give drive link or YouTube URL for your 2.5-minute teaching sample" class="form-control form-control-lg" />
-                                        </div>
-                                        <a href="#profile" id="work-submit" class="continue-btn btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">Submit and Proceed</a>
+                                                        </FormLabel>
+                                                    </Form.Check>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="teachingXp"  
+                                                            value="informalperson" />
+                                                        <FormLabel className="ml-3"> In person, informal </FormLabel>
+                                                    </Form.Check>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="teachingXp"  
+                                                            value="online" />
+                                                        <FormLabel className="ml-3"> Online </FormLabel>
+                                                    </Form.Check>
+                                                    <Form.Check>
+                                                        <input 
+                                                            type="radio" 
+                                                            name="teachingXp"  
+                                                            value="none" />
+                                                        <FormLabel className="ml-3"> None </FormLabel>
+                                                    </Form.Check>
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                        <Form.Group>
+                                            <FormLabel>Teaching Experience</FormLabel>
+                                            <Form.Control
+                                                as="textarea" 
+                                                placeholder="Tell us about your teaching experience, if any, in not about 100 words" 
+                                                id="teachingexp" 
+                                                required>
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <FormLabel>Teaching Sample</FormLabel>
+                                            <Form.Control
+                                                type="text" 
+                                                id="samplelink" 
+                                                placeholder="Give drive link or YouTube URL for your 2.5-minute teaching sample" 
+                                                required 
+                                            />
+                                        </Form.Group>
+                                        <Button  
+                                            variant="outline-primary"
+                                            block
+                                            className="mt-5">
+                                                Submit & Proceed
+                                        </Button>
                                     </FormContent>
                                 </Col>
                             </Row>
@@ -256,19 +304,37 @@ class OnboardingPage extends React.Component {
                                     <FormContent className="py-5 px-3 px-md-4">
                                         <h1 class="display-4">Profile Info</h1>
                                         <hr class="mb-4" />
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Headline</label>
-                                            <input type="text" required name="headline" placeholder="Enter a headline for your profile" class="form-control form-control-lg" />
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="lead">Website</label>
-                                            <input type="text" name="website" placeholder="Enter your website URL" class="form-control form-control-lg" />
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="lead">LinkedIn Profile URL</label>
-                                            <input type="text" name="linkedinId" placeholder="https://www.linkedin.com" class="form-control form-control-lg" />
-                                        </div>
-                                        <button type="submit" class="btn btn-outline btn-block btn-lg mt-5 btn-outline-primary">Submit</button>
+                                        <Form.Group>
+                                            <FormLabel>Headline</FormLabel>
+                                            <Form.Control
+                                                type="text" 
+                                                required 
+                                                id="headline" 
+                                                placeholder="Enter a headline for your profile" 
+                                            />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <FormLabel>Website</FormLabel>
+                                            <Form.Control
+                                                type="text" 
+                                                id="website" 
+                                                placeholder="Enter your website URL"
+                                            />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <FormLabel>LinkedIn Profile URL</FormLabel>
+                                            <Form.Control
+                                                type="text"
+                                                id="linkedinId" 
+                                                placeholder="https://www.linkedin.com" 
+                                            />
+                                        </Form.Group>
+                                            <Button  
+                                                variant="outline-primary"
+                                                block
+                                                className="mt-5">
+                                                    Submit & Proceed
+                                            </Button>
                                     </FormContent>
                                 </Col>
                             </Row>

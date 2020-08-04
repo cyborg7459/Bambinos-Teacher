@@ -73,6 +73,11 @@ export const StyledForm = styled.form`
     margin-bottom : 80px;
 `
 
+export const FormLabel = styled.label`
+    font-size : 16px;
+    font-weight : 200;
+`
+
 export const PersonalImage = styled.div`
     ${imageRegion}
     background: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80');
