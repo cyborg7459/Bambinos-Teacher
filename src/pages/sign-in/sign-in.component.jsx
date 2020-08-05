@@ -1,7 +1,5 @@
 import React from 'react';
-import './sign-in.style.css';
 import {Link} from 'react-router-dom';
-import {Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
@@ -9,6 +7,7 @@ import {setCurrentUser} from '../../redux/user/user.actions';
 import InputGroup from '../../components/input/input.component';
 import Header from '../../components/header/header.component';
 import Loader from '../../components/loader/loader.component';
+import {SignInButton, SignInFormContainer} from './sign-in.style';
 
 class SignInPage extends React.Component {
 
@@ -70,6 +69,7 @@ class SignInPage extends React.Component {
         const {setCurrentUser} = this.props;
         let Email = document.getElementById('email-inp').value;
         let Password = document.getElementById('password-inp').value;
+        let errorMessage = document.getElementById('sign-in-error');
         
         let data = {
             email_id: Email,
@@ -83,7 +83,7 @@ class SignInPage extends React.Component {
 
         var config = {
         method: 'post',
-        url: 'https://7315fdfcf7b5.ngrok.io/teacherSignUp/getByEmail',
+        url: 'http://104.244.122.252:8080/Teacher/teacherSignUp/getByEmail',
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -102,14 +102,9 @@ class SignInPage extends React.Component {
                     isLoading : false
                 })
                 if(response.data.msg === "Please sign up to login")
-                {
-                    alert("This email ID is not registered with us. Please sign up with us");
-                    this.props.history.push('/signup');
-                }
+                    errorMessage.innerHTML = "You are no registered with Bambinos.in. Kindly sign-up before";
                 else if(response.data.msg === "Invalid password")
-                {
-                    alert("The password you've entered is incorrect");
-                }
+                    errorMessage.innerHTML = "Password is incorrect !!! Please try again";
             }
         })
         .catch(error => console.log(error));
@@ -124,7 +119,8 @@ class SignInPage extends React.Component {
                 <Header></Header>
                 <div className="form-container">
                 <h1>Sign In</h1>
-                    <Form id="sign-in-form">
+                    <SignInFormContainer>
+                        <h5 className="text-center text-danger" id="sign-in-error"></h5>
                         <InputGroup
                             required
                             id='email-inp'
@@ -140,13 +136,13 @@ class SignInPage extends React.Component {
                             placeholder= 'Enter Your Password'
                             label= 'Password'
                         />
-                        <Button onClick={this.formValidate} id="sign-in-submit" className='btn-block btn-success mt-4' variant="primary">
+                        <SignInButton onClick={this.formValidate} id="sign-in-submit" className='btn-block btn-success mt-4' variant="primary">
                             Sign In
-                        </Button>
+                        </SignInButton>
                         <p className="text-center mb-0">
                             <Link to="/signup" className="text-info">New User? Click here to sign up</Link>
                         </p>
-                    </Form>
+                    </SignInFormContainer>
                 </div>             
             </div>
         )

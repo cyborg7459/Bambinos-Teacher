@@ -8,13 +8,16 @@ const imageRegion = css`
     overflow: hidden;
 `
 
-export const OnboardingContainer = styled.div`
+export const OnboardingPageContainer = styled.div`
     height: 100%;
+    min-height : 100vh;
+    padding : 40px 0px;
     width: 100%;
     background-color: rgba(235, 245, 247,0.5);
 
     hr {
         background-color: #fff;
+        max-width : 1400px;
     }
 
     .display-4 {
@@ -22,50 +25,51 @@ export const OnboardingContainer = styled.div`
         font-weight: 500;
     }
 
+    .display-3 {
+        font-size : 3.5rem;
+    }
+
+    h3 {
+        font-weight : 200!important;
+    }
+
     textarea
     {
         height: 150px!important;
     }
-`
 
-export const FormContainer = styled.div`
-    width : calc(100% - 70px);
-    height : 100%!important;
-    margin-left : 70px;
-    position : relative;
+    @media(max-width : 700px) {
+        .display-3 {
+            font-size : 2.5rem;
+        }
 
-    @media(max-width :1200px)
-    {
-        width : 100%;
-        margin-left : 0px;
+        h3 {
+            font-size : 1.5rem;
+        }
     }
 `
 
-export const SidebarToggler = styled.button`
-    position : absolute;
-    top : 20px;
-    left : 20px;
-    display : none;
-
-    @media (max-width : 1200px)
-    {
-        display : block;
-    }
+export const OnboardingFormContainer = styled.div`
+    display : block;
 `
 
-export const FormRegion = styled.div`
-    padding: 100px 0px;
-    width : 80%;
-    margin-left : 8%;
+export const IndividualFormContainer = styled.div`
+    display : flex;
+    justify-content : center;
+    margin-top : 90px;
+    width : 100%;
+    height : 100%;
+    align-items : center;
 
-    @media(max-width: 1200px)
-    {
-        width:96%;
-        margin-left : 2%;
+    @media(max-width : 1200px) {
+        margin-top: 50px;
     }
 `
 
 export const StyledForm = styled.form`
+    overflow : hidden;
+    width : 95%;
+    max-width : 1400px;
     background-color : white;
     padding : 0px;
     box-shadow : 0px 2px 10px  rgba(0,0,0,0.6);
@@ -75,7 +79,7 @@ export const StyledForm = styled.form`
 
 export const FormLabel = styled.label`
     font-size : 16px;
-    font-weight : 200;
+    font-weight :300;
 `
 
 export const PersonalImage = styled.div`
@@ -94,6 +98,10 @@ export const ProfileImage = styled.div`
 `
 
 export const FormContent = styled.div`
+    padding : 50px 35px;
+    box-sizing : border-box;
+    overflow : hidden;
+
     h1 {
         font-weight : 300!important;
     }
@@ -106,4 +114,13 @@ export const FormContent = styled.div`
     label {
         color : #323538;
     }
+
+    @media(max-width : 1200px) {
+        padding : 40px 35px;
+    }
+
+    @media(max-width : 700px) {
+        padding : 40px 15px;
+    }
+
 `
