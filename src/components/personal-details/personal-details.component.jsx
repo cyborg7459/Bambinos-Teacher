@@ -70,7 +70,10 @@ class PersonalDetails extends React.Component {
             };
     
             axios(config)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                this.props.history.push('/onboard/experience');
+            })
             .catch(error => console.log(error));
         }      
     }

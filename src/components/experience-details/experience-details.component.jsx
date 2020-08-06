@@ -107,9 +107,12 @@ class ExperienceDetails extends React.Component {
                 data : data
             };
     
-            // axios(config)
-            // .then(response => console.log(response))
-            // .catch(error => console.log(error));
+            axios(config)
+            .then(response => {
+                console.log(response);
+                this.props.history.push('/onboard/profile');
+            })
+            .catch(error => console.log(error));
         }    
     }
 
