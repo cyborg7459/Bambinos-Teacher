@@ -62,16 +62,16 @@ class PersonalDetails extends React.Component {
     
             let config = {
                 method: 'post',
-                url: 'https://104.244.122.252:8080/Teacher/teacherSignUp/saveLocation',
+                url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/saveLocation',
                 headers: { 
                     'Content-Type': 'application/json'
                 },
                 data : data
             };
     
-            // axios(config)
-            // .then(response => console.log(response))
-            // .catch(error => console.log(error));
+            axios(config)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
         }      
     }
 

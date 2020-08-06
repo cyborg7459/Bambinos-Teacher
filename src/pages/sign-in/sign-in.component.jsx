@@ -83,7 +83,7 @@ class SignInPage extends React.Component {
 
         var config = {
         method: 'post',
-        url: 'http://104.244.122.252:8080/Teacher/teacherSignUp/getByEmail',
+        url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/getByEmail',
         headers: { 
             'Content-Type': 'application/json'
         },
@@ -95,7 +95,7 @@ class SignInPage extends React.Component {
             console.log(response.data);
             if(response.data.status) {
                 setCurrentUser(user);
-                this.props.history.push('/onboard');
+                this.props.history.push('/onboard/personal');
             }
             else {
                 this.setState({

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './sign-up.style.css';
 import {connect} from 'react-redux';
 
+import Loader from '../../components/loader/loader.component';
 import SignUpDetails from '../../components/signup-details/signup-details.components';
 import OTPForm from '../../components/otp-form/otp-form.component';
 import Header from '../../components/header/header.component';
@@ -16,7 +17,8 @@ class SignUpPage extends React.Component {
         otp: 1234, 
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        isLoading: false
     }
 
     validationError = (target, errorMessage, targetBtn) => {
@@ -48,84 +50,60 @@ class SignUpPage extends React.Component {
             phone: phoneV
         });
     }
-    
-    saveUserData = (nameV, emailV, phoneV) => {
-        let data = {
-            name: nameV,
-            email_id: emailV,
-            mobile: phoneV
-        }
 
-        console.log(this.props);
-        
-        var config = {
-        method: 'post',
-        url: 'https://7315fdfcf7b5.ngrok.io/teacherSignUp/save',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data : data
-        };
-        console.log(data);
-
-        axios(config)
-        .then(response => {
-            if(response.data.status) {
-                const sentOtp = parseInt(response.data.data.otp);
-                this.setState({otp: sentOtp, step: 2});
-            }
-            else {
-                alert("You're already registered");
-                setTimeout(this.props.history.push("/signin"), 2000);
-            }
-            console.log(response);
-        })
-        .catch(error => console.log(error));
-    };
-
-    sendOtp = () => {
-        let nameInp = document.getElementById('name-inp').value;
-        let emailInp = document.getElementById('email-inp').value;
-        let phoneInp = document.getElementById('phone-inp').value;     
-        this.updateState(nameInp, emailInp, phoneInp);
-        this.saveUserData(nameInp, emailInp, phoneInp);
-    }
-
-    OTPSuccess = () => {
+    loadingStart = () => {
         this.setState({
-            step: 3
+            isLoading : true
         })
     }
 
-    setPassword = () => {
-        const {setCurrentUser} = this.props;
-        
-        const passwordInp = document.getElementById('password-inp').value;
-        let data = {
-            email_id : this.state.email,
-            password : passwordInp
-        }
-        let user = {
-            email : this.state.email
-        }
-        let config = {
-            method: 'post',
-            url: 'https://7315fdfcf7b5.ngrok.io/teacherSignUp/savePassword',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
-        };
-        
-        axios(config)
-        .then(response => {
-            if(response.data.status) {
-                setCurrentUser(user);
-                this.props.history.push('/onboard');
-            }
+    loadingEnd = () => {
+        this.setState({
+            isLoading : false
         })
-        .catch(error => console.log(error));
     }
+
+    stepChange = num => {
+        this.setState({
+            step: num
+        })
+    }
+
+    setOTP = num => {
+        this.setState({
+            otp: num
+        })
+    }
+
+    // setPassword = () => {
+    //     const {setCurrentUser} = this.props;
+        
+    //     const passwordInp = document.getElementById('password-inp').value;
+    //     let data = {
+    //         email_id : this.state.email,
+    //         password : passwordInp
+    //     }
+    //     let user = {
+    //         email : this.state.email
+    //     }
+    //     let config = {
+    //         method: 'post',
+    //         url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/savePassword',
+    //         headers: { 
+    //             'Content-Type': 'application/json'
+    //         },
+    //         data : data
+    //     };
+        
+    //     axios(config)
+    //     .then(response => {
+    //         if(response.data.status) {
+    //             setCurrentUser(user);
+    //             this.props.history.push('/onboard');
+    //         }
+    //     })
+    //     .catch(error => console.log(error));
+    // }
 
     render() {
         const {step} = this.state;
@@ -134,9 +112,16 @@ class SignUpPage extends React.Component {
             case 1: 
                 return (
                     <div className="sign-up-container">
+                        {
+                            this.state.isLoading ? <Loader text="Sending OTP"></Loader> : null
+                        }
                         <Header></Header>
                         <SignUpDetails 
-                            handleSubmit={this.sendOtp} 
+                            setOTP={this.setOTP}
+                            stepChange={this.stepChange}
+                            updateState={this.updateState}
+                            loadingStart={this.loadingStart}
+                            loadingEnd={this.loadingEnd}
                             validationError={this.validationError} 
                             removeErrors={this.removeErrors} 
                             disableBtn={this.disableBtn} 
@@ -149,6 +134,7 @@ class SignUpPage extends React.Component {
                     <div className="sign-up-container">
                         <Header></Header>
                         <OTPForm 
+                            stepChange={this.stepChange}
                             step={this.state.step} 
                             otp={this.state.otp} 
                             OTPSuccess={this.OTPSuccess} 
@@ -163,9 +149,13 @@ class SignUpPage extends React.Component {
                 return (
                     <div className="sign-up-container">
                         <Header></Header>
+                        {
+                            this.state.isLoading ? <Loader text="Setting your password"></Loader> : null
+                        }
                         <SetPasswordForm 
+                            loadingStart={this.loadingStart}
+                            loadingEnd={this.loadingEnd}
                             email = {this.state.email}
-                            handleSubmit={this.setPassword}
                             validationError={this.validationError} 
                             removeErrors={this.removeErrors} 
                             disableBtn={this.disableBtn} 

@@ -1,6 +1,7 @@
 import React from 'react';
 import InputGroup from '../input/input.component';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 import {SignUpForm, SignUpButton} from './signup-details.styles';
 
@@ -75,16 +76,61 @@ class SignUpDetails extends React.Component {
         }
     }
 
-    validate = () => {
+    validateAll = () => {
         if(this.nameValidate() && this.emailValidate() && this.phoneValidate())
             return true;
         else
             return false;
     };
 
+    saveUserData = (nameV, emailV, phoneV) => {
+        
+        let data = {
+            name: nameV,
+            email_id: emailV,
+            mobile: phoneV
+        }
+
+        console.log(this.props);
+        
+        var config = {
+        method: 'post',
+        url:'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/save',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        data : data
+        };
+        console.log(data);
+
+        axios(config)
+        .then(response => {
+            if(response.data.status) {
+                this.props.setOTP(parseInt(response.data.data.otp));
+                this.props.stepChange(2);
+                this.props.loadingEnd();
+            }
+            else {
+                alert("You're already registered");
+                this.props.loadingEnd();
+                setTimeout(this.props.history.push("/signin"), 2000);
+            }
+
+            console.log(response);
+        })
+        .catch(error => console.log(error));
+    };
+
     sendOTP = () => {
-        if(this.validate())
-            this.props.handleSubmit();
+        console.log("Sending OTP");
+        if(this.validateAll()) {
+            this.props.loadingStart();
+            let nameInp = document.getElementById('name-inp').value;
+            let emailInp = document.getElementById('email-inp').value;
+            let phoneInp = document.getElementById('phone-inp').value;     
+            this.props.updateState(nameInp, emailInp, phoneInp);
+            this.saveUserData(nameInp, emailInp, phoneInp);
+        }
     }
 
     render() {

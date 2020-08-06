@@ -1,6 +1,11 @@
 import React from 'react';
 import InputGroup from '../input/input.component';
 import {PasswordButton, PasswordForm} from './set-password.styles';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+
+import {setCurrentUser} from '../../redux/user/user.actions';
 
 class SetPasswordForm extends React.Component {
     
@@ -35,8 +40,42 @@ class SetPasswordForm extends React.Component {
     }
 
     setPassword = () => {
-        if(this.passwordConfirmValidate())
-            this.props.handleSubmit();
+        if(this.passwordConfirmValidate()) {
+            this.props.loadingStart();
+            const {setCurrentUser} = this.props;
+        
+            const passwordInp = document.getElementById('password-inp').value;
+            let data = {
+                email_id : this.props.email,
+                password : passwordInp
+            }
+            console.log(data);
+            let user = {
+                email : this.props.email
+            }
+            
+            let config = {
+                method: 'post',
+                url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/savePassword',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                data : data
+            };
+            
+            axios(config)
+            .then(response => {
+                if(response.data.status) {
+                    this.props.loadingEnd();
+                    setCurrentUser(user);
+                    this.props.history.push('/onboard/personal');
+                }
+            })
+            .catch(error => {
+                this.props.loadingEnd()
+                console.log(error);
+            });
+        } 
     }
 
     render() {
@@ -67,4 +106,8 @@ class SetPasswordForm extends React.Component {
     }
 }
 
-export default SetPasswordForm;
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default withRouter(connect(null, mapDispatchToProps)(SetPasswordForm));

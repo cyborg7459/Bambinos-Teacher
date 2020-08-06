@@ -49,10 +49,6 @@ export const OnboardingPageContainer = styled.div`
     }
 `
 
-export const OnboardingFormContainer = styled.div`
-    display : block;
-`
-
 export const IndividualFormContainer = styled.div`
     display : flex;
     justify-content : center;

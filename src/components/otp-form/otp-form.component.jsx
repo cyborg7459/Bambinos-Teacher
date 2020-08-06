@@ -58,7 +58,6 @@ class OTPForm extends React.Component {
 
     otpValidate = () => {
         const {otp} = this.props;
-        const OTPSuccess = this.props.OTPSuccess;
         const OtpInput = document.getElementById('otp-inp');
         let targetBtn = document.getElementById('otp-submit-btn');
         let validationError = this.props.validationError;
@@ -67,7 +66,7 @@ class OTPForm extends React.Component {
             if(parseInt(OtpInput.value) !== otp)
                 validationError(OtpInput, "Incorrect OTP !!! Try again", targetBtn)
             else 
-                OTPSuccess();
+                this.props.stepChange(3);
         } 
     }
 

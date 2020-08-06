@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom';
 import PersonalDetails from '../../components/personal-details/personal-details.component';
 import ExperienceDetails from '../../components/experience-details/experience-details.component';
 import ProfileDetails from '../../components/profile-details/profile-details.component'; 
-import {OnboardingPageContainer, OnboardingFormContainer} from './onboarding.style';
+import {OnboardingPageContainer} from './onboarding.style';
 
 class OnboardingPage extends React.Component {
 
