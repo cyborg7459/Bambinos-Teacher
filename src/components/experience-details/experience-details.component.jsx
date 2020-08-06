@@ -100,7 +100,7 @@ class ExperienceDetails extends React.Component {
     
             let config = {
                 method: 'post',
-                url: 'https://104.244.122.252:8080/Teacher/teacherSignUp/saveTeachingExp',
+                url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/saveTeachingExp',
                 headers: { 
                     'Content-Type': 'application/json'
                 },

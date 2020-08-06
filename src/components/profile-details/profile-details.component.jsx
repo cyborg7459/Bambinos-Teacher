@@ -46,7 +46,7 @@ class ProfileDetails extends React.Component {
     
             let config = {
                 method: 'post',
-                url: 'https://104.244.122.252:8080/Teacher/teacherSignUp/saveTeachingSocial',
+                url: 'https://teacher-signup.bambinos.in:8443/Teacher/teacherSignUp/saveTeachingSocial',
                 headers: { 
                     'Content-Type': 'application/json'
                 },
