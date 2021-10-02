@@ -10,6 +10,10 @@ a {
   text-decoration: none!important;
 }
 
+a:hover {
+  text-decoration: none!important;
+}
+
 body {
   height: 100%;  
   font-family: 'Quicksand', sans-serif!important;
